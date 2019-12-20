@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Bugs from "../models/Bugs";
+import Bugs from "../models/Bug";
 import ApiError from "../utils/ApiError";
 
 const _repository = mongoose.model("Bugs", Bugs);
@@ -10,10 +10,11 @@ class BugsService {
   }
 
   async getById(id) {
-    await _repository.findById(id);
+    let data = await _repository.findById(id);
     if (!data) {
       throw new ApiError("Invalid ID", 400);
     }
+    return data;
   }
 
   async create(rawData) {
@@ -22,9 +23,10 @@ class BugsService {
   }
 
   async edit(id, update) {
-    let data = await _repository.findOneAndUpdate({ _id: id }, update, {
-      new: true
-    });
+    let data = await _repository.findOneAndUpdate(
+      { _id: id, closed: false },
+      update
+    );
     if (!data) {
       throw new ApiError("Invalid ID", 400);
     }
