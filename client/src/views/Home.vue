@@ -5,6 +5,7 @@
         <nav class="navbar navbar-light bg-light">
           <a class="navbar-brand" href="#">
             <h3>
+              <!-- prettier-ignore-attribute -->
               B
               <i class="fas fa-bug"></i>g Tracker
             </h3>
@@ -26,7 +27,7 @@
     </div>
     <div class="row">
       <div class="col pl-5 pr-5">
-        <table class="table table-striped table-dark text-left">
+        <table class="bugs table table-striped table-dark text-left">
           <thead>
             <tr>
               <th scope="col">Title</th>
@@ -35,29 +36,18 @@
               <th scope="col">Last Modified</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-for="bug in bugs" :key="bug.id">
             <!-- SECTION rows to be vue components -->
-            <tr>
-              <th scope="row">Acct reactivation</th>
-              <td>Mark</td>
-              <td>open</td>
-              <td>date</td>
-            </tr>
-            <tr>
+            <bug-component :bugData="bug" />
+            <!-- <tr>
               <th scope="row">Authentication</th>
               <td>Jacob</td>
               <td>open</td>
               <td>date</td>
-            </tr>
-            <tr>
-              <th scope="row">Acct Avatar</th>
-              <td>Larry</td>
-              <td>closed</td>
-              <td>date</td>
-            </tr>
+            </tr>-->
           </tbody>
         </table>
-        <form @submit.prevent="addBug" class="text-left">
+        <form @submit.prevent="reportBug" class="text-left">
           <div class="form-group">
             <label for="reportedBy">Reported by</label>
             <input
@@ -104,10 +94,14 @@
 
 <script>
 import BugModal from "../components/BugModal";
+import BugComponent from "../components/BugComponent";
 // @ is an alias to /src
 
 export default {
   name: "home",
+  mounted() {
+    this.$store.dispatch("getBugs");
+  },
   data() {
     return {
       newBug: {
@@ -119,12 +113,13 @@ export default {
     };
   },
   components: {
-    BugModal
+    BugModal,
+    BugComponent
   },
   methods: {
-    addBug() {
+    reportBug() {
       let bug = { ...this.newBug };
-      this.$store.dispatch("addBug", bug);
+      this.$store.dispatch("reportBug", bug);
       this.newBug = {
         reportedBy: "",
         title: "",
@@ -133,6 +128,18 @@ export default {
         //TODO need to reset closed to false when this was not on form input?
       };
     }
+  },
+  computed: {
+    bugs() {
+      return this.$store.state.bugs;
+    }
   }
 };
 </script>
+
+<style scoped>
+.fa-bug {
+  transform: rotate(180deg);
+  font-size: 0.7em;
+}
+</style>

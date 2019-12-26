@@ -8,11 +8,20 @@ let _sandbox = axios.create({ baseURL: "//localhost:3000/api", timeout: 3000 });
 
 export default new Vuex.Store({
   state: {
-    bugs: []
+    bugs: [],
+    activeBug: {}
   },
   mutations: {
+    setAllBugs(state, data) {
+      state.bugs = data;
+    },
+
     addBug(state, bug) {
       state.bugs.push(bug);
+    },
+
+    setActiveBug(state, bug) {
+      state.bugs = bug;
     }
   },
   actions: {
@@ -26,14 +35,14 @@ export default new Vuex.Store({
       commit("setActiveBug", res.data);
     },
 
-    async addBug({ commit, dispatch }, bug) {
+    async reportBug({ commit, dispatch }, bug) {
       let res = await _sandbox.post("bugs", bug);
       commit("addBug", res.data);
     },
 
     async editBug({ commit, dispatch }, id) {
       let res = await _sandbox.put("bugs/" + id);
-      commit("editBug", res.data);
+      commit("getBugs", res.data);
     },
 
     async deleteBug({ commit, dispatch }, id) {
