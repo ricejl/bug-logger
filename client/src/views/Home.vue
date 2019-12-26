@@ -4,15 +4,19 @@
       <div class="col p-0">
         <nav class="navbar navbar-light bg-light">
           <a class="navbar-brand" href="#">
-            B
-            <i class="fas fa-bug"></i>g Tracker
+            <h3>
+              B
+              <i class="fas fa-bug"></i>g Tracker
+            </h3>
           </a>
           <button
+            type="button"
             class="btn btn-outline-dark my-2 my-sm-0"
             data-toggle="modal"
-            data-target="#reportBug"
+            data-target="#bugModal"
           >Report</button>
         </nav>
+        <bug-modal id="bugModal"></bug-modal>
       </div>
     </div>
     <div class="row">
@@ -53,16 +57,82 @@
             </tr>
           </tbody>
         </table>
+        <form @submit.prevent="addBug" class="text-left">
+          <div class="form-group">
+            <label for="reportedBy">Reported by</label>
+            <input
+              type="text"
+              v-model="newBug.reportedBy"
+              id="reportedBy"
+              class="form-control"
+              placeholder="Your name..."
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="title">Bug title</label>
+            <input
+              type="text"
+              v-model="newBug.title"
+              id="title"
+              class="form-control"
+              placeholder="Bug title..."
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              name="description"
+              v-model="newBug.description"
+              id="description"
+              class="form-control"
+              cols="1"
+              rows="10"
+              placeholder="Briefly describe the bug..."
+              required
+            ></textarea>
+          </div>
+
+          <button class="btn btn-success" type="submit">Submit</button>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import BugModal from "../components/BugModal";
 // @ is an alias to /src
 
 export default {
   name: "home",
-  components: {}
+  data() {
+    return {
+      newBug: {
+        reportedBy: "",
+        title: "",
+        description: "",
+        closed: false
+      }
+    };
+  },
+  components: {
+    BugModal
+  },
+  methods: {
+    addBug() {
+      let bug = { ...this.newBug };
+      this.$store.dispatch("addBug", bug);
+      this.newBug = {
+        reportedBy: "",
+        title: "",
+        description: "",
+        closed: false
+        //TODO need to reset closed to false when this was not on form input?
+      };
+    }
+  }
 };
 </script>
