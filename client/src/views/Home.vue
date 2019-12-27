@@ -86,6 +86,7 @@
           </div>
 
           <button class="btn btn-success" type="submit">Submit</button>
+          <!-- TODO navigate to bugDetails on submit -->
         </form>
       </div>
     </div>
