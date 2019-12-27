@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import Bugs from "../models/Bug";
+import Bug from "../models/Bug";
 import ApiError from "../utils/ApiError";
 
-const _repository = mongoose.model("Bugs", Bugs);
+const _repository = mongoose.model("Bug", Bug);
 
 class BugsService {
   async getAll() {

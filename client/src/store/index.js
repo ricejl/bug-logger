@@ -4,7 +4,7 @@ import axios from "axios";
 
 Vue.use(Vuex);
 
-let _sandbox = axios.create({ baseURL: "//localhost:3000/api", timeout: 6000 });
+let _api = axios.create({ baseURL: "//localhost:3000/api", timeout: 6000 });
 
 export default new Vuex.Store({
   state: {
@@ -26,27 +26,27 @@ export default new Vuex.Store({
   },
   actions: {
     async getBugs({ commit, dispatch }) {
-      let res = await _sandbox.get("bugs");
+      let res = await _api.get("bugs");
       commit("setAllBugs", res.data);
     },
 
     async getBugById({ commit, dispatch }, id) {
-      let res = await _sandbox.get("bugs/" + id);
+      let res = await _api.get("bugs/" + id);
       commit("setActiveBug", res.data);
     },
 
     async reportBug({ commit, dispatch }, bug) {
-      let res = await _sandbox.post("bugs", bug);
+      let res = await _api.post("bugs", bug);
       commit("addBug", res.data);
     },
 
     async editBug({ commit, dispatch }, id) {
-      let res = await _sandbox.put("bugs/" + id);
+      let res = await _api.put("bugs/" + id);
       commit("getBugs", res.data);
     },
 
     async deleteBug({ commit, dispatch }, id) {
-      let res = await _sandbox.delete("bugs/" + id);
+      let res = await _api.delete("bugs/" + id);
       dispatch("getBugs");
     }
   },
