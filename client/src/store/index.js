@@ -4,7 +4,7 @@ import axios from "axios";
 
 Vue.use(Vuex);
 
-let _sandbox = axios.create({ baseURL: "//localhost:3000/api", timeout: 3000 });
+let _sandbox = axios.create({ baseURL: "//localhost:3000/api", timeout: 6000 });
 
 export default new Vuex.Store({
   state: {
@@ -21,7 +21,7 @@ export default new Vuex.Store({
     },
 
     setActiveBug(state, bug) {
-      state.bugs = bug;
+      state.activeBug = bug;
     }
   },
   actions: {
