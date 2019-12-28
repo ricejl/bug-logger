@@ -43,6 +43,7 @@ export default new Vuex.Store({
     async editBug({ commit, dispatch }, id) {
       let res = await _api.put("bugs/" + id);
       commit("getBugs", res.data);
+      // TODO include body
     },
 
     async deleteBug({ commit, dispatch }, id) {
