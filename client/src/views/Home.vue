@@ -15,7 +15,9 @@
             class="btn btn-outline-dark my-2 my-sm-0"
             data-toggle="modal"
             data-target="#bugModal"
-          >Report</button>
+          >
+            Report
+          </button>
         </nav>
         <bug-modal id="bugModal"></bug-modal>
       </div>
@@ -79,8 +81,8 @@
               id="description"
               class="form-control"
               cols="1"
-              rows="10"
-              placeholder="Briefly describe the bug..."
+              rows="8"
+              placeholder="Describe the bug..."
               required
             ></textarea>
           </div>
