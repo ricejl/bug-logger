@@ -10,7 +10,7 @@ class NotesService {
   //   }
 
   async getNotesByBugId(bugId) {
-    return await _repository.find({ id: bugId });
+    return await _repository.find({ bug: bugId });
   }
 
   //   async getById(id) {
