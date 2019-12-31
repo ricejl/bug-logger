@@ -52,7 +52,7 @@ export default new Vuex.Store({
     async editBug({ commit, dispatch }, id) {
       let res = await _api.put("bugs/" + id);
       commit("getBugs", res.data);
-      // TODO include body
+      // TODO include body, need to dispatch vs commit??
     },
 
     async deleteBug({ commit, dispatch }, id) {
@@ -68,6 +68,11 @@ export default new Vuex.Store({
     async createNote({ commit, dispatch }, note) {
       let res = await _api.post("notes", note);
       commit("addNote", res.data);
+    },
+
+    async deleteNote({ commit, dispatch }, { noteId, bugId }) {
+      let res = await _api.delete("notes/" + noteId);
+      dispatch("getNotes", bugId);
     }
   },
   modules: {}
