@@ -1,10 +1,15 @@
 <template>
   <tr>
-    <router-link :to="{ name: 'bugDetails', params: { id: bugData.id }}">
+    <router-link :to="{ name: 'bugDetails', params: { id: bugData.id } }">
       <th scope="row">{{ bugData.title }}</th>
     </router-link>
     <td>{{ bugData.reportedBy }}</td>
-    <td>{{ formatStatus }}</td>
+    <div v-if="bugData.closed === true">
+      <td class="status-red">closed</td>
+    </div>
+    <div v-else>
+      <td class="status-green">open</td>
+    </div>
     <td>{{ formatDate }}</td>
   </tr>
 </template>
@@ -14,17 +19,9 @@ export default {
   name: "bug",
   // FIXME table no longer striped--displays rows in same grey
   // FIXME need to display "open"/green when closed is false and "closed"/red when closed is true
-  // FIXME format last modified with moment
+  // FIXME format last modified with moment or use new Date to create new instance of object
   props: ["bugData"],
   computed: {
-    formatStatus() {
-      if (this.bugData.closed) {
-        this.bugData.closed = "closed";
-      } else {
-        this.bugData.closed = "open";
-      }
-      return this.bugData.closed;
-    },
     formatDate() {
       return this.bugData.updatedAt.substring(0, 10);
     }
@@ -33,4 +30,28 @@ export default {
 </script>
 
 <style>
+th[scope="row"] {
+  font-weight: normal;
+}
+
+a th {
+  color: white;
+}
+
+a:visited th {
+  color: white;
+}
+
+a:hover th {
+  color: white;
+  /* text-decoration: none; */
+}
+
+.status-red {
+  color: red;
+}
+
+.status-green {
+  color: green;
+}
 </style>

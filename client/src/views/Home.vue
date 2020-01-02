@@ -41,14 +41,10 @@
           <tbody v-for="bug in bugs" :key="bug.id">
             <!-- SECTION rows to be vue components -->
             <bug-component :bugData="bug" />
-            <!-- <tr>
-              <th scope="row">Authentication</th>
-              <td>Jacob</td>
-              <td>open</td>
-              <td>date</td>
-            </tr>-->
           </tbody>
         </table>
+        <!-- FIXME move report bug form to swal -->
+        <!-- FIXME navigate to BugDetails upon submit -->
         <form @submit.prevent="reportBug" class="text-left">
           <div class="form-group">
             <label for="reportedBy">Reported by</label>
@@ -88,7 +84,6 @@
           </div>
 
           <button class="btn btn-success" type="submit">Submit</button>
-          <!-- TODO navigate to bugDetails on submit -->
         </form>
       </div>
     </div>

@@ -2,10 +2,10 @@
   <body class="container-fluid">
     <header class="row">
       <div class="col p-0">
-        <nav class="navbar navbar-light bg-light">
+        <nav class="navbar navbar-light">
           <a class="navbar-brand" href="#">
             <router-link :to="{ name: 'home' }">
-              <h3>
+              <h3 id="bug-tracker">
                 <!-- prettier-ignore-attribute -->
                 B
                 <i class="fas fa-bug"></i>g Tracker
@@ -88,6 +88,7 @@ export default {
   mounted() {
     this.$store.dispatch("getBugById", this.$route.params.id);
     this.$store.dispatch("getNotes", this.$route.params.id);
+    // this.$store.dispatch("getActiveBug", this.$route.params.id);
   },
   data() {
     return {
@@ -96,11 +97,6 @@ export default {
         content: "",
         bug: this.$route.params.id
       }
-      // editedBug: {
-      //   title: "",
-      //   reportedBy: "",
-      //   description: ""
-      // }
     };
   },
   components: {
@@ -129,15 +125,15 @@ export default {
           html:
             "<form id='swal-edit-bug' @submit.prevent='editBug'>" +
             "<label for='swal-title'>Title</label>" +
-            "<textarea id='swal-title' rows='1' v-model='editedBug.title'>" +
+            "<textarea id='swal-title' rows='1'>" +
             bug.title +
             "</textarea>" +
             "<label for='swal-reportedBy'>Reported by</label>" +
-            "<input id='swal-reportedBy' v-model='editedBug.reportedBy' value=" +
+            "<input id='swal-reportedBy' value=" +
             bug.reportedBy +
             ">" +
             "<label for='swal-description'>Description</label>" +
-            "<textarea id='swal-description' rows='5' v-model='editedBug.description'>" +
+            "<textarea id='swal-description' rows='5'>" +
             bug.description +
             "</textarea></<label>" +
             "</form>",
@@ -198,6 +194,17 @@ export default {
 </script>
 
 <style>
+body {
+  background-color: #fff1cf;
+}
+.navbar {
+  background-color: #015668;
+}
+
+#bug-tracker {
+  color: #ffd369;
+}
+
 #reported-by,
 #status {
   display: inline-flex;
