@@ -22,56 +22,11 @@
           <p class="pb-1" id="reported-by">Reported by: {{ bug.reportedBy }}</p>
           <p id="status">Status: {{ formatStatus }}</p>
           <p class="border rounded p-3">{{ bug.description }}</p>
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-toggle="modal"
-            data-target="#exampleModal"
-          >
+          <button class="btn btn-primary" @click="editBugForm(bug)">
             Edit
           </button>
           <button class="btn btn-danger" @click="closeBug">Close</button>
         </div>
-        <!-- FIXME modal not working -->
-        <!-- <div
-          class="modal fade"
-          id="exampleModal"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                ...
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button type="button" class="btn btn-primary">
-                  Save changes
-                </button>
-              </div>
-            </div>
-          </div>
-        </div> -->
       </div>
       <div class="row">
         <div class="col pt-5">
@@ -89,8 +44,6 @@
               <note-component :noteData="note" />
             </tbody>
           </table>
-
-          <!-- TODO add notes table drawing from notes component; notes can be added or removed -->
         </div>
       </div>
       <div class="row">
@@ -135,8 +88,6 @@ export default {
   mounted() {
     this.$store.dispatch("getBugById", this.$route.params.id);
     this.$store.dispatch("getNotes", this.$route.params.id);
-    // FIXME status does not automatically update once bug is closed. page must be refreshed.
-    // FIXME notes do not populate after page refresh despite the network showing status 200 OK for notes get request
   },
   data() {
     return {
@@ -145,6 +96,11 @@ export default {
         content: "",
         bug: this.$route.params.id
       }
+      // editedBug: {
+      //   title: "",
+      //   reportedBy: "",
+      //   description: ""
+      // }
     };
   },
   components: {
@@ -161,23 +117,56 @@ export default {
         showCloseButton: true
       }).then(result => {
         if (result.value) {
-          this.$swal("Closed", "Bug status is now closed");
           this.$store.dispatch("deleteBug", this.$route.params.id);
-        } else {
-          this.$swal("Cancelled", "Bug status remains open");
         }
       });
       // FIXME sweetalert not formatted correctly
     },
-    editBug() {
-      let d = document.getElementById("desc");
-      if (d.contentEditable) {
-        d.contentEditable = false;
+    editBugForm(bug) {
+      if (bug.closed == "open") {
+        this.$swal({
+          title: "Edit bug",
+          html:
+            "<form id='swal-edit-bug' @submit.prevent='editBug'>" +
+            "<label for='swal-title'>Title</label>" +
+            "<textarea id='swal-title' rows='1' v-model='editedBug.title'>" +
+            bug.title +
+            "</textarea>" +
+            "<label for='swal-reportedBy'>Reported by</label>" +
+            "<input id='swal-reportedBy' v-model='editedBug.reportedBy' value=" +
+            bug.reportedBy +
+            ">" +
+            "<label for='swal-description'>Description</label>" +
+            "<textarea id='swal-description' rows='5' v-model='editedBug.description'>" +
+            bug.description +
+            "</textarea></<label>" +
+            "</form>",
+          focusConfirm: false,
+          showCancelButton: true,
+          confirmButtonText: "Submit",
+          preConfirm: () => {
+            let editedBug = {
+              title: document.getElementById("swal-title").value,
+              reportedBy: document.getElementById("swal-reportedBy").value,
+              description: document.getElementById("swal-description").value
+            };
+            return editedBug;
+          }
+        }).then(result => {
+          if (result.value) {
+            this.$store.dispatch("editBug", {
+              id: this.$route.params.id,
+              bug: result.value
+            });
+          }
+        });
+      } else if (bug.closed == "closed") {
+        this.$swal({
+          type: "error",
+          title: "Oops!",
+          text: "Closed bugs cannot be edited."
+        });
       }
-      // TODO
-      //bring up modal prepopulated with active bug title, reported by, desc
-      //dispatch("editBug", id, and body)
-      //must also add body to fns in store
     },
     createNote() {
       let note = { ...this.newNote };
@@ -218,5 +207,17 @@ export default {
   justify-content: right;
   position: absolute;
   right: 1em;
+}
+
+#swal-edit-bug {
+  display: flex;
+  flex-direction: column;
+}
+
+label[for="swal-title"],
+label[for="swal-reportedBy"],
+label[for="swal-description"] {
+  padding-top: 1em;
+  text-align: left;
 }
 </style>

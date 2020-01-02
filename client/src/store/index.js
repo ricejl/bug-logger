@@ -49,15 +49,15 @@ export default new Vuex.Store({
       commit("addBug", res.data);
     },
 
-    async editBug({ commit, dispatch }, id) {
-      let res = await _api.put("bugs/" + id);
-      commit("getBugs", res.data);
-      // TODO include body, need to dispatch vs commit??
+    async editBug({ commit, dispatch }, { id, bug }) {
+      console.log("id and edited bug before api put request", id, bug);
+      let res = await _api.put("bugs/" + id, bug);
+      dispatch("getBugs", res.data);
     },
 
     async deleteBug({ commit, dispatch }, id) {
       let res = await _api.delete("bugs/" + id);
-      dispatch("getBugs");
+      dispatch("getBugById", id);
     },
 
     async getNotes({ commit, dispatch }, id) {
