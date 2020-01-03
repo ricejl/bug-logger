@@ -18,7 +18,6 @@
 export default {
   name: "bug",
   // FIXME table no longer striped--displays rows in same grey
-  // FIXME need to display "open"/green when closed is false and "closed"/red when closed is true
   // FIXME format last modified with moment or use new Date to create new instance of object
   props: ["bugData"],
   computed: {

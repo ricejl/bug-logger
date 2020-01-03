@@ -47,14 +47,13 @@ export default new Vuex.Store({
     async reportBug({ commit, dispatch }, bug) {
       let res = await _api.post("bugs", bug);
       commit("addBug", res.data);
+      commit("setActiveBug", res.data);
     },
 
     async editBug({ commit, dispatch }, { id, bug }) {
       console.log("id and edited bug before api put request", id, bug);
       let res = await _api.put("bugs/" + id, bug);
-      dispatch("getBugs", res.data);
-      // FIXME or would this be commit setActiveBug? does res return entire bug object?
-      // if it remains a dispatch to getBugs, do you need to send res.data? don't think it's being used.
+      dispatch("getBugById", res.data.id);
     },
 
     async deleteBug({ commit, dispatch }, id) {

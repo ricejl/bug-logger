@@ -21,14 +21,18 @@
           <h5 class="pt-4 pb-2">Title: {{ bug.title }}</h5>
           <p class="pb-1" id="reported-by">Reported by: {{ bug.reportedBy }}</p>
           <p id="status">Status: {{ formatStatus }}</p>
-          <p class="border rounded p-3">{{ bug.description }}</p>
-          <button class="btn btn-primary" @click="editBugForm(bug)">
-            Edit
-          </button>
+          <p class="border rounded p-3">
+            {{ bug.description }}
+            <i
+              class="fas fa-edit pl-1"
+              title="edit"
+              @click="editBugForm(bug)"
+            ></i>
+          </p>
           <button class="btn btn-danger" @click="closeBug">Close</button>
         </div>
       </div>
-      <div class="row">
+      <div class="row pl-3 pr-3">
         <div class="col pt-5">
           <h5>Notes</h5>
           <table class="notes table table-striped table-dark text-left">
@@ -47,60 +51,32 @@
         </div>
       </div>
       <div class="row">
-        <div class="col">
-          <form @submit.prevent="createNote">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input
-                type="text"
-                v-model="newNote.reportedBy"
-                id="name"
-                class="form-control"
-                placeholder="Your name..."
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="note">Note</label>
-              <textarea
-                v-model="newNote.content"
-                id="note"
-                class="form-control"
-                cols="1"
-                rows="5"
-                placeholder="Add comment..."
-                required
-              ></textarea>
-            </div>
-            <button class="btn btn-success">Submit</button>
-          </form>
+        <div class="col pt-5">
+          <!-- TODO add button to make new note appear -->
+          <new-note></new-note>
         </div>
       </div>
     </main>
+    <footer></footer>
   </body>
 </template>
 
 <script>
 import NoteComponent from "@/components/NoteComponent";
+import NewNote from "@/components/NewNote";
 
 export default {
   name: "bugDetails",
   mounted() {
     this.$store.dispatch("getBugById", this.$route.params.id);
     this.$store.dispatch("getNotes", this.$route.params.id);
-    // this.$store.dispatch("getActiveBug", this.$route.params.id);
   },
   data() {
-    return {
-      newNote: {
-        reportedBy: "",
-        content: "",
-        bug: this.$route.params.id
-      }
-    };
+    return {};
   },
   components: {
-    NoteComponent
+    NoteComponent,
+    NewNote
   },
   methods: {
     closeBug() {
@@ -164,14 +140,8 @@ export default {
         });
       }
     },
-    createNote() {
-      let note = { ...this.newNote };
-      this.$store.dispatch("createNote", note);
-      this.newNote = {
-        reportedBy: "",
-        content: "",
-        bug: this.$route.params.id
-      };
+    newNote() {
+      NewNote;
     }
   },
   computed: {
@@ -226,5 +196,18 @@ label[for="swal-reportedBy"],
 label[for="swal-description"] {
   padding-top: 1em;
   text-align: left;
+}
+
+footer {
+  min-height: 8vh;
+}
+
+.fa-edit {
+  cursor: pointer;
+  opacity: 0.3;
+}
+
+.fa-edit:hover {
+  opacity: 0.7;
 }
 </style>

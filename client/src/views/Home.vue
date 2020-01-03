@@ -83,7 +83,9 @@
             ></textarea>
           </div>
 
-          <button class="btn btn-success" type="submit">Submit</button>
+          <button class="btn btn-success" type="submit">
+            Submit
+          </button>
         </form>
       </div>
     </div>
@@ -115,9 +117,9 @@ export default {
     BugComponent
   },
   methods: {
-    reportBug() {
+    async reportBug() {
       let bug = { ...this.newBug };
-      this.$store.dispatch("reportBug", bug);
+      await this.$store.dispatch("reportBug", bug);
       this.newBug = {
         reportedBy: "",
         title: "",
@@ -125,6 +127,10 @@ export default {
         closed: false
         //TODO need to reset closed to false when this was not on form input?
       };
+      this.$router.push({
+        name: "bugDetails",
+        params: { id: this.$store.state.activeBug.id }
+      });
     }
   },
   computed: {
