@@ -34,23 +34,23 @@ th[scope="row"] {
 }
 
 a th {
-  color: white;
+  color: aliceblue;
 }
 
 a:visited th {
-  color: white;
+  color: aliceblue;
 }
 
 a:hover th {
-  color: white;
-  /* text-decoration: none; */
+  color: aliceblue;
+  text-decoration: none;
 }
 
 .status-red {
-  color: red;
+  color: #fa877f;
 }
 
 .status-green {
-  color: green;
+  color: #9be3de;
 }
 </style>

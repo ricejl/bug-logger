@@ -2,9 +2,9 @@
   <div class="home container-fluid">
     <div class="row">
       <div class="col p-0">
-        <nav class="navbar navbar-light bg-light">
+        <nav class="navbar navbar-light">
           <a class="navbar-brand" href="#">
-            <h3>
+            <h3 class="bug-tracker">
               <!-- prettier-ignore-attribute -->
               B
               <i class="fas fa-bug"></i>g Tracker
@@ -29,7 +29,9 @@
     </div>
     <div class="row">
       <div class="col pl-5 pr-5">
-        <table class="bugs table table-striped table-dark text-left">
+        <table
+          class="bugs table table-striped table-dark text-left text-aliceblue"
+        >
           <thead>
             <tr>
               <th scope="col">Title</th>
@@ -45,7 +47,9 @@
         </table>
         <!-- FIXME move report bug form to swal -->
         <!-- FIXME navigate to BugDetails upon submit -->
-        <form @submit.prevent="reportBug" class="text-left">
+        <form @submit.prevent="reportBug" class="text-left p-5 ml-5 mr-5">
+          <h5 class="text-center">Report New Bug</h5>
+
           <div class="form-group">
             <label for="reportedBy">Reported by</label>
             <input
@@ -83,7 +87,7 @@
             ></textarea>
           </div>
 
-          <button class="btn btn-success" type="submit">
+          <button class="btn btn-green" type="submit">
             Submit
           </button>
         </form>
@@ -141,9 +145,29 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .fa-bug {
   transform: rotate(180deg);
   font-size: 0.7em;
+}
+
+body {
+  background-color: #dedef0;
+}
+
+.navbar {
+  background-color: #bd574e;
+}
+
+.bug-tracker {
+  color: #ffad87;
+}
+
+.btn-green {
+  background-color: #9be3de;
+}
+
+.text-aliceblue {
+  color: aliceblue;
 }
 </style>

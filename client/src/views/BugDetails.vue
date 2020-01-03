@@ -5,7 +5,7 @@
         <nav class="navbar navbar-light">
           <a class="navbar-brand" href="#">
             <router-link :to="{ name: 'home' }">
-              <h3 id="bug-tracker">
+              <h3 class="bug-tracker">
                 <!-- prettier-ignore-attribute -->
                 B
                 <i class="fas fa-bug"></i>g Tracker
@@ -21,7 +21,7 @@
           <h5 class="pt-4 pb-2">Title: {{ bug.title }}</h5>
           <p class="pb-1" id="reported-by">Reported by: {{ bug.reportedBy }}</p>
           <p id="status">Status: {{ formatStatus }}</p>
-          <p class="border rounded p-3">
+          <p class="border-custom rounded p-3">
             {{ bug.description }}
             <i
               class="fas fa-edit pl-1"
@@ -29,13 +29,15 @@
               @click="editBugForm(bug)"
             ></i>
           </p>
-          <button class="btn btn-danger" @click="closeBug">Close</button>
+          <button class="btn btn-red" @click="closeBug">Close</button>
         </div>
       </div>
       <div class="row pl-3 pr-3">
         <div class="col pt-5">
           <h5>Notes</h5>
-          <table class="notes table table-striped table-dark text-left">
+          <table
+            class="notes table table-striped table-dark text-left text-aliceblue"
+          >
             <thead>
               <tr>
                 <th scope="col">Name</th>
@@ -164,17 +166,6 @@ export default {
 </script>
 
 <style>
-body {
-  background-color: #fff1cf;
-}
-.navbar {
-  background-color: #015668;
-}
-
-#bug-tracker {
-  color: #ffd369;
-}
-
 #reported-by,
 #status {
   display: inline-flex;
@@ -209,5 +200,14 @@ footer {
 
 .fa-edit:hover {
   opacity: 0.7;
+}
+
+.border-custom {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.btn-red {
+  background-color: #bd574e;
+  color: aliceblue;
 }
 </style>

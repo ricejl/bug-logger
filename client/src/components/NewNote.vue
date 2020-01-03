@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="createNote" class="border rounded p-5 ml-5 mr-5">
+  <form @submit.prevent="createNote" class="p-5 ml-5 mr-5">
     <h5 class="text-center">New Note</h5>
     <div class="form-group">
       <label for="name">Name</label>
@@ -24,7 +24,7 @@
         required
       ></textarea>
     </div>
-    <button class="btn btn-success">Submit</button>
+    <button class="btn btn-green">Submit</button>
   </form>
 </template>
 
