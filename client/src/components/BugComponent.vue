@@ -41,9 +41,9 @@ a:visited th {
   color: aliceblue;
 }
 
-a:hover th {
+tr a:hover {
   color: aliceblue;
-  text-decoration: none;
+  text-decoration: aliceblue underline;
 }
 
 .status-red {

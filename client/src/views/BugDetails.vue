@@ -1,5 +1,5 @@
 <template>
-  <body class="container-fluid">
+  <body class="bug-details container-fluid">
     <header class="row">
       <div class="col p-0">
         <nav class="navbar navbar-light">
@@ -166,6 +166,10 @@ export default {
 </script>
 
 <style>
+body {
+  font-family: inherit;
+}
+
 #reported-by,
 #status {
   display: inline-flex;
@@ -209,5 +213,13 @@ footer {
 .btn-red {
   background-color: #bd574e;
   color: aliceblue;
+}
+
+.btn-red:hover {
+  background-color: #ffad87;
+}
+
+.navbar a {
+  text-decoration: none;
 }
 </style>
