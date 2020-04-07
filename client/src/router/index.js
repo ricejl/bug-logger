@@ -15,6 +15,10 @@ const routes = [
     path: "/bugs/:id",
     name: "bugDetails",
     component: BugDetails
+  },
+  {
+    path: "*",
+    redirect: "/"
   }
 ];
 

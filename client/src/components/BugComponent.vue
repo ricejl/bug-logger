@@ -10,7 +10,7 @@
     <div v-else>
       <td class="status-green">open</td>
     </div>
-    <td>{{ formatDate }}</td>
+    <td>{{ bugData.updatedAt | formatDate }}</td>
   </tr>
 </template>
 
@@ -19,12 +19,7 @@ export default {
   name: "bug",
   // FIXME table no longer striped--displays rows in same grey
   // FIXME format last modified with moment or use new Date to create new instance of object
-  props: ["bugData"],
-  computed: {
-    formatDate() {
-      return this.bugData.updatedAt.substring(0, 10);
-    }
-  }
+  props: ["bugData"]
 };
 </script>
 

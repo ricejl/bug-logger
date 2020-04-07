@@ -29,7 +29,9 @@
               @click="editBugForm(bug)"
             ></i>
           </p>
-          <button class="btn btn-red" @click="closeBug">Close</button>
+          <div v-if="formatStatus == 'open'">
+            <button class="btn btn-red" @click="closeBug">Close</button>
+          </div>
         </div>
       </div>
       <div class="row pl-3 pr-3">
@@ -72,6 +74,7 @@ export default {
   mounted() {
     this.$store.dispatch("getBugById", this.$route.params.id);
     this.$store.dispatch("getNotes", this.$route.params.id);
+    window.scrollTo(0, 0);
   },
   data() {
     return {};
